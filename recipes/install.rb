@@ -40,10 +40,10 @@ template 'marathon-wrapper' do
   group    'root'
   mode     '0755'
   source   'wrapper.erb'
-  variables({ jar:    ::Dir.glob("#{node['marathon']['home']}/*#{node['marathon']['version']}/target/*/*.jar").first.to_s,
-    marathon_bin:"#{node['marathon']['home']}/marathon-#{node['marathon']['version']}/bin/marathon",
-    env:    node['marathon']['env'],
-    flags:  node['marathon']['flags'],
-    syslog: node['marathon']['syslog']
-  })
+  variables(lazy do
+    { marathon_bin:"#{node['marathon']['home']}/marathon-#{node['marathon']['version']}/bin/marathon",
+      env:    node['marathon']['env'],
+      flags:  node['marathon']['flags'],
+      syslog: node['marathon']['syslog'] }
+  end)
 end
